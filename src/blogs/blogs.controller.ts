@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { Blogs } from './blogs.schema';
 import { CreateBlogsDto } from './dto/create.blogs.dto';
+import { UpdateBlogsDto } from './dto/update.blogs.dto';
 
 @Controller('blogs')
 export class BlogsController {
@@ -43,5 +53,13 @@ export class BlogsController {
   @Get(':blogsId')
   findOne(@Param('BlogsId') blogsId: string): Promise<Blogs> {
     return this.blogsService.getBlogsById(blogsId);
+  }
+
+  @Patch(':blogsId')
+  update(
+    @Param('blogsId') blogsId: string,
+    @Body() updateBloggersDto: UpdateBlogsDto,
+  ): Promise<Blogs> {
+    return this.blogsService.updateBlogs(blogsId, updateBloggersDto);
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Blogs, BlogsDocument } from './blogs.schema';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { BlogsExtendedType } from 'src/types/blogs.types';
+import { UpdateBlogsDto } from './dto/update.blogs.dto';
 
 @Injectable()
 export class BlogsRepository {
@@ -45,5 +46,12 @@ export class BlogsRepository {
 
   async findOne(blogsId: string): Promise<BlogsDocument> {
     return this.blogsModel.findOne({ blogsId });
+  }
+
+  async findOneAndUpdate(
+    blogsFilterQuery: FilterQuery<Blogs>,
+    blogsUpdates: UpdateBlogsDto,
+  ): Promise<Blogs> {
+    return this.blogsModel.findOneAndUpdate(blogsFilterQuery, blogsUpdates);
   }
 }

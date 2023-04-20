@@ -3,6 +3,7 @@ import { BlogsRepository } from './blogs.repository';
 import { BlogsExtendedType } from 'src/types/blogs.types';
 import { Blogs } from './blogs.schema';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateBlogsDto } from './dto/update.blogs.dto';
 
 @Injectable()
 export class BlogsService {
@@ -42,5 +43,12 @@ export class BlogsService {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     return this.blogsRepository.findOne({ blogsId });
+  }
+
+  async updateBlogs(
+    blogsId: string,
+    blogsUpdates: UpdateBlogsDto,
+  ): Promise<Blogs> {
+    return this.blogsRepository.findOneAndUpdate({ blogsId }, blogsUpdates);
   }
 }
