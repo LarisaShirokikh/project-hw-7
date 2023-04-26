@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -9,9 +10,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
-import { Blogs } from './blogs.schema';
-import { CreateBlogsDto } from './dto/create.blogs.dto';
-import { UpdateBlogsDto } from './dto/update.blogs.dto';
+import { Blogs } from '../schemas/blogs.schema';
+import { CreateBlogsDto } from '../dto/create.blogs.dto';
+import { UpdateBlogsDto } from '../dto/update.blogs.dto';
 
 @Controller('blogs')
 export class BlogsController {
@@ -61,5 +62,10 @@ export class BlogsController {
     @Body() updateBloggersDto: UpdateBlogsDto,
   ): Promise<Blogs> {
     return this.blogsService.updateBlogs(blogsId, updateBloggersDto);
+  }
+
+  @Delete(':blogsId')
+  remove(@Param('blogsId') blogsId): Promise<Blogs> {
+    return this.blogsService.deleteBlogs(blogsId);
   }
 }

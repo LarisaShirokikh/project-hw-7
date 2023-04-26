@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { BlogsRepository } from './blogs.repository';
 import { BlogsExtendedType } from 'src/types/blogs.types';
-import { Blogs } from './blogs.schema';
+import { Blogs } from '../schemas/blogs.schema';
 import { v4 as uuidv4 } from 'uuid';
-import { UpdateBlogsDto } from './dto/update.blogs.dto';
+import { UpdateBlogsDto } from '../dto/update.blogs.dto';
 
 @Injectable()
 export class BlogsService {
@@ -50,5 +50,9 @@ export class BlogsService {
     blogsUpdates: UpdateBlogsDto,
   ): Promise<Blogs> {
     return this.blogsRepository.findOneAndUpdate({ blogsId }, blogsUpdates);
+  }
+
+  async deleteBlogs(blogsId: string): Promise<Blogs> {
+    return this.blogsRepository.findOneAndDelete({ blogsId });
   }
 }
