@@ -3,7 +3,7 @@ import { BlogsRepository } from "src/blogs/blogs.repository";
 import { PostsRepository } from "src/posts/posts.repository";
 import { UsersRepository } from "src/users/users.repository";
 
-@Controller('testings')
+@Controller('testing')
 export class TestingController {
     constructor(
                 protected postsRepository: PostsRepository,
