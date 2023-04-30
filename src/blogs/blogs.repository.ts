@@ -70,4 +70,9 @@ export class BlogsRepository {
     const blogger: Blogs | null = await this.blogsModel.findOne({id: blogId}, {_id: 0, __v: 0})
     return blogger;
 }
+
+async deleteAll() {
+  await this.blogsModel.deleteMany({});
+  return
+}
 }

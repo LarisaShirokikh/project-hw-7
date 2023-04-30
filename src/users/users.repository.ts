@@ -14,6 +14,7 @@ export class UsersRepository {
     @InjectModel(User.name) private usersModel: Model<UserDocument>,
     @InjectModel(UsersEmailConfData.name)
     private usersEmailConfDataModel: Model<UsersEmailConfDataDocument>,
+    
   ) {}
 
   async getAllUsers(
@@ -106,6 +107,10 @@ export class UsersRepository {
 
   async findUserByUserId(userId: string): Promise<User> {
     return this.usersModel.findById(userId).select('-password, -createdAt').exec()
+  }
+
+  async deleteAll() {
+    return await this.usersModel.deleteMany({});
   }
   
 }

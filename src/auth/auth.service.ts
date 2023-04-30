@@ -17,7 +17,7 @@ export class AuthService {
     private usersService: UsersService,
     private usersRepository: UsersRepository,
     private emailService: EmailService,
-    private jwtService: JwtService,
+    
   ) {}
 
   async validateUser(username: string, password): Promise<User> {

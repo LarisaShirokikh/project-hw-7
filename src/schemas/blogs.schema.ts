@@ -16,6 +16,7 @@ export class Blogs {
   createdAt: string;
   @Prop()
   isMembership: true;
+  static schema: any;
 }
 
 export const BlogsSchema = SchemaFactory.createForClass(Blogs);

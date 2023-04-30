@@ -11,7 +11,7 @@ export class Posts {
     title: string;
 
     @Prop({ required: true })
-    shotDescription: string;
+    shortDescription: string;
 
     @Prop({ required: true })
     content: string;
@@ -24,6 +24,7 @@ export class Posts {
 
     @Prop({ required: true })
     createdAt: string
+  static schema: any;
 
 }
 export const PostsSchema = SchemaFactory.createForClass(Posts);

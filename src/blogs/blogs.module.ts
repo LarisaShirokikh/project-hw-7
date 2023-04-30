@@ -4,19 +4,18 @@ import { BlogsController } from './blogs.controller';
 import { BlogsService } from './blogs.service';
 import { Blogs, BlogsSchema } from '../schemas/blogs.schema';
 import { BlogsRepository } from './blogs.repository';
-import { PostModule } from 'src/posts/posts.module';
-import { PostsRepository } from 'src/posts/posts.repository';
-import { PostsService } from 'src/posts/posts.service';
+
+import { Posts, PostsSchema } from 'src/schemas/posts.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Blogs.name, schema: BlogsSchema }]),
-   
+    MongooseModule.forFeature([
+      { name: Blogs.name, schema: BlogsSchema },
+      { name: Posts.name, schema: PostsSchema}]),
   ],
   controllers: [BlogsController],
-  providers: [BlogsService, BlogsRepository,
-  PostsRepository, PostsService],
-  exports: [BlogsService, BlogsRepository,
-    PostsRepository, PostsService],
+  providers: [BlogsService, BlogsRepository
+],
+  exports: [BlogsService, BlogsRepository],
 })
 export class BlogsModule {}

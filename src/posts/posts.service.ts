@@ -3,6 +3,7 @@ import { PostsRepository } from "./posts.repository";
 import { ObjectId } from "typeorm";
 import { PostsType } from "src/types/posts.types";
 import { BlogsRepository } from "src/blogs/blogs.repository";
+import { log } from "console";
 
 @Injectable()
 export class PostsService {
@@ -17,7 +18,7 @@ export class PostsService {
 }
 async createPost(title: string, shortDescription: string, content: string, blogId: string): Promise<PostsType | undefined> {
     const blogger = await this.blogsRepository.getBlogsById(blogId)
-
+console.log(blogger)
     if (blogger) {
         const newPost = {
             id: (new ObjectId()).toString(),
@@ -39,5 +40,24 @@ async createPost(title: string, shortDescription: string, content: string, blogI
         // @ts-ignore
         return createdPost
     }
+}
+async getPostById(id: string): Promise<PostsType | undefined> {
+    const post = await this.postsRepository.getPostById(id)
+    //@ts-ignore
+    return post
+}
+
+async updatePost(id: string, title: string, shortDescription: string, content: string){
+    const post = await this.postsRepository.getPostById(id)
+    post.title = title
+    post.shortDescription = shortDescription
+    post.content = content
+    const updatedPost = await this.postsRepository.updatePost(post)
+    return updatedPost
+}
+async deletePost(id: string){
+    await this.postsRepository.getPostById(id)
+    const deletedPost = await this.postsRepository.deletePost(id)
+    return deletedPost
 }
 }

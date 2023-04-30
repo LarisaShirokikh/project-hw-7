@@ -36,6 +36,22 @@ async createPost(newPosts: PostsType) {
     const post = await this.postsModel.insertMany({...newPosts})
     return post;
 }
-
+ async getPostById(id: string) {
+    const post = await this.postsModel.findById(id)
+    return post;
 
     }
+
+    async updatePost(post: PostsType) {
+        const updatedPost = await this.postsModel.findByIdAndUpdate( {...post})
+        return updatedPost;
+    }
+    async deletePost(id: string) {
+        const deletedPost = await this.postsModel.findByIdAndDelete(id)
+        return deletedPost;
+    }
+
+    async deleteAll() {
+        return this.postsModel.deleteMany({})
+    }
+}

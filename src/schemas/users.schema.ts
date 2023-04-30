@@ -20,6 +20,7 @@ export class User {
 
   @Prop({ required: true })
   createdAt: string;
+  static schema: any;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

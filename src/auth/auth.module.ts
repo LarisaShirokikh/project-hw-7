@@ -17,10 +17,15 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtService } from './jwt.service';
 import { PostsService } from 'src/posts/posts.service';
 import { PostsRepository } from 'src/posts/posts.repository';
+import { BlogsRepository } from 'src/blogs/blogs.repository';
+import { Posts, PostsSchema } from 'src/schemas/posts.schema';
+import { Blogs, BlogsSchema } from 'src/schemas/blogs.schema';
 
 const models = [
   { name: User.name, schema: UserSchema },
   { name: UsersEmailConfData.name, schema: UsersEmailConfDataSchema },
+  { name: Posts.name, schema: PostsSchema},
+  { name: Blogs.name, schema: BlogsSchema }
 ];
 
 @Module({
@@ -37,8 +42,9 @@ const models = [
     JwtStrategy,
     JwtService,
     PostsService,
-    PostsRepository
+    PostsRepository,
+    BlogsRepository
   ],
-  exports: [AuthService, EmailService],
+  exports: [AuthService, EmailService, JwtService],
 })
 export class AuthModule {}

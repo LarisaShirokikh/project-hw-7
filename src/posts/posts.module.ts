@@ -7,6 +7,10 @@ import { PostsRepository } from "./posts.repository";
 import { Posts, PostsSchema } from "src/schemas/posts.schema";
 import { BlogsRepository } from "src/blogs/blogs.repository";
 import { BlogsService } from "src/blogs/blogs.service";
+import { Blogs, BlogsSchema } from "src/schemas/blogs.schema";
+import { JwtModule, JwtService } from "@nestjs/jwt";
+import { jwtConstants } from "src/auth/constants";
+import { AuthModule } from "src/auth/auth.module";
 
 
 
@@ -14,18 +18,18 @@ import { BlogsService } from "src/blogs/blogs.service";
 @Module({
     imports: [ 
       MongooseModule.forFeature([
-        { name: Posts.name, schema: PostsSchema}]),
+        { name: Posts.name, schema: PostsSchema},
+        { name: Blogs.name, schema: BlogsSchema }]),
+        AuthModule
+      ],
   
-  ], 
+  
     controllers: [PostsController],
     providers: [
       PostsService, 
-      PostsRepository, 
-      BlogsRepository,
-      BlogsService,
+      PostsRepository
     ],
-    exports: [PostsService, PostsRepository,  BlogsRepository,
-      BlogsService,]
+    exports: [PostsService, PostsRepository]
     })
   export class PostModule {}
   
