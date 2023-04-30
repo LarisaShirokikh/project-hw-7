@@ -1,4 +1,4 @@
-import { Controller, Delete } from "@nestjs/common";
+import { Controller, Delete, HttpCode, HttpStatus } from "@nestjs/common";
 import { BlogsRepository } from "src/blogs/blogs.repository";
 import { PostsRepository } from "src/posts/posts.repository";
 import { UsersRepository } from "src/users/users.repository";
@@ -12,12 +12,13 @@ export class TestingController {
 
 ) {}
 
+@HttpCode(HttpStatus.OK)
 @Delete('all-data')
 async deleteAll() {
     await this.blogsRepository.deleteAll();
     await this.postsRepository.deleteAll();
     await this.usersRepository.deleteAll();
     
-    return "All data deleted";
+    return ;
 }
 }
