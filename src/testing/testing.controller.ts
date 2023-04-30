@@ -12,7 +12,7 @@ export class TestingController {
 
 ) {}
 
-@HttpCode(HttpStatus.OK)
+@HttpCode(204)
 @Delete('all-data')
 async deleteAll() {
     await this.blogsRepository.deleteAll();
