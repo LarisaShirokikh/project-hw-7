@@ -1,4 +1,4 @@
-export interface UsersType {
+/*export type UsersType = {
   accountData: {
     id: string;
     login: string;
@@ -13,11 +13,11 @@ export interface UsersType {
     expirationDate: Date;
     isConfirmed: boolean;
   };
-}
+};
 
 export type UsersEmailConfDataType = {
   email: string;
   confirmationCode: string;
   expirationDate: Date;
   isConfirmed: boolean;
-};
+};*/

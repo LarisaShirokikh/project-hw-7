@@ -53,19 +53,24 @@ export class BlogsController {
 
   @Get(':blogsId')
   findOne(@Param('BlogsId') blogsId: string): Promise<Blogs> {
-    return this.blogsService.getBlogsById(blogsId);
+    const blogs = this.blogsService.getBlogsById(blogsId);
+    return blogs
   }
 
   @Patch(':blogsId')
   update(
     @Param('blogsId') blogsId: string,
     @Body() updateBloggersDto: UpdateBlogsDto,
-  ): Promise<Blogs> {
+  ) {
     return this.blogsService.updateBlogs(blogsId, updateBloggersDto);
   }
 
   @Delete(':blogsId')
-  remove(@Param('blogsId') blogsId): Promise<Blogs> {
-    return this.blogsService.deleteBlogs(blogsId);
+  remove(@Param('blogsId') blogsId) {
+    const isDeleted = this.blogsService.deleteBlogs(blogsId);
+    if (isDeleted) {
+      return true
+    }
+    return false
   }
 }

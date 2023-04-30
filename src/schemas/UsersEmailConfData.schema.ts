@@ -3,8 +3,12 @@ import { HydratedDocument } from 'mongoose';
 
 export type UsersEmailConfDataDocument = HydratedDocument<UsersEmailConfData>;
 
-@Schema({ _id: false, id: false, versionKey: false })
+@Schema({ id: false, versionKey: false })
+
 export class UsersEmailConfData {
+
+  @Prop({ required: true, unique: true  })
+  email: string;
   @Prop({ type: String, required: true })
   confirmationCode: string;
   @Prop({ type: String, required: true })

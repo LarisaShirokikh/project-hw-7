@@ -19,13 +19,9 @@ export class UsersController {
   ) {}
 
   @Post()
-  async createUser(
-    @Body('login') login: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ) {
+  async createUser(@Body() createUserDto) {
     try {
-      return this.authService.userRegistration(login, email, password);
+      return await this.authService.registerUser(createUserDto.login, createUserDto.email, createUserDto.password);
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -48,8 +44,8 @@ export class UsersController {
     );
   }
 
-  @Delete(':id')
+  /*@Delete(':id')
   async deleteUser(@Param('id') id: string) {
     await this.usersService.deleteUser(id);
-  }
+  }*/
 }

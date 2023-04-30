@@ -1,20 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Users, UsersDocument } from '../schemas/users.schema';
 import {
   UsersEmailConfData,
   UsersEmailConfDataDocument,
 } from '../schemas/UsersEmailConfData.schema';
-import { UsersEmailConfDataType } from '../types/emailConfData.types';
-import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from '../dto/create.users.dto';
-import { UsersType } from '../types/users.types';
+import { User, UserDocument } from '../schemas/users.schema';
+
 
 @Injectable()
 export class UsersRepository {
   constructor(
-    @InjectModel(Users.name) private usersModel: Model<UsersDocument>,
+    @InjectModel(User.name) private usersModel: Model<UserDocument>,
     @InjectModel(UsersEmailConfData.name)
     private usersEmailConfDataModel: Model<UsersEmailConfDataDocument>,
   ) {}
@@ -53,30 +50,26 @@ export class UsersRepository {
     };
   }
 
-  async createUser(user: UsersType) {
-    console.log(user);
-    await this.usersModel.insertMany([user]);
+  async createUser(newUser: User) {
+    const user = new this.usersModel(newUser)
+    return user.save()
+  }
+
+  async findByEmail(login: string, password: string): Promise<User> {
+    return this.usersModel.findOne({ login, password }).exec();
   }
 
   async findByLogin(login: string): Promise<Users | null> {
     return await this.usersModel.findOne({ login });
   }
 
-  /* async saveUser(
-    login: string,
-    password: string,
-    email: string,
-  ): Promise<Users> {
-    const createdUser = new this.usersModel({ login, password, email });
-    return createdUser.save();
-  }*/
 
   async deleteUsers(id: string) {
     const result = await this.usersModel.deleteOne({ id: id });
     return result.deletedCount === 1;
   }
 
-  async insertDbUnconfirmedEmail(newUserEmail: UsersEmailConfDataType) {
+  async insertDbUnconfirmedEmail(newUserEmail: UsersEmailConfData) {
     const insertDb = await this.usersEmailConfDataModel.create(newUserEmail);
     return insertDb.save();
   }
@@ -106,4 +99,14 @@ export class UsersRepository {
       return user;
     }
   }*/
+
+  async findByLoginOrEmail(loginOrEmail: string): Promise<User> {
+    return this.usersModel.findOne({ loginOrEmail }).exec();
+  }
+
+  async findUserByUserId(userId: string): Promise<User> {
+    return this.usersModel.findById(userId).select('-password, -createdAt').exec()
+  }
+  
 }
+

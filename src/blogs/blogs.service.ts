@@ -39,20 +39,18 @@ export class BlogsService {
       isMembership: true,
     });
   }
-  async getBlogsById(blogsId: string): Promise<Blogs> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    return this.blogsRepository.findOne({ blogsId });
+  async getBlogsById(blogsId: string): Promise<Blogs | null> {
+    return await this.blogsRepository.findOne( blogsId );
   }
 
   async updateBlogs(
     blogsId: string,
     blogsUpdates: UpdateBlogsDto,
-  ): Promise<Blogs> {
-    return this.blogsRepository.findOneAndUpdate({ blogsId }, blogsUpdates);
+  ) {
+    return await this.blogsRepository.findOneAndUpdate({ blogsId }, blogsUpdates);
   }
 
-  async deleteBlogs(blogsId: string): Promise<Blogs> {
-    return this.blogsRepository.findOneAndDelete({ blogsId });
+  async deleteBlogs(id: string) {
+    return await this.blogsRepository.findOneAndDelete(id);
   }
 }

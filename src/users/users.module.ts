@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './users.controller';
-import { Users, UsersSchema } from '../schemas/users.schema';
+import { User, UserSchema } from '../schemas/users.schema';
 import { UsersService } from './users.service';
 import { UsersRepository } from './users.repository';
 import {
   UsersEmailConfData,
   UsersEmailConfDataSchema,
 } from '../schemas/UsersEmailConfData.schema';
-import { EmailManager } from '../maneger/email.maneger';
-import { EmailAdapter } from '../maneger/email.adapter';
 import { AuthService } from '../auth/auth.service';
+import { EmailService } from 'src/maneger/email.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Users.name, schema: UsersSchema },
+      { name: User.name, schema: UserSchema },
       { name: UsersEmailConfData.name, schema: UsersEmailConfDataSchema },
     ]),
   ],
@@ -23,9 +23,9 @@ import { AuthService } from '../auth/auth.service';
   providers: [
     UsersService,
     UsersRepository,
-    EmailManager,
-    EmailAdapter,
     AuthService,
+    EmailService,
+    JwtService,
   ],
   //exports: [UsersService, UsersRepository],
 })

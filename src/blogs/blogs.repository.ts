@@ -51,11 +51,23 @@ export class BlogsRepository {
   async findOneAndUpdate(
     blogsFilterQuery: FilterQuery<Blogs>,
     blogsUpdates: UpdateBlogsDto,
-  ): Promise<Blogs> {
-    return this.blogsModel.findOneAndUpdate(blogsFilterQuery, blogsUpdates);
+  ) {
+    const blogsInstance = await this.blogsModel.findOneAndUpdate(blogsFilterQuery, blogsUpdates);
+    if (!blogsInstance) return false
+    await blogsInstance.save()
+    return true
   }
 
-  async findOneAndDelete(blogsFilterQuery: FilterQuery<Blogs>): Promise<Blogs> {
-    return this.blogsModel.findOneAndDelete(blogsFilterQuery);
+  async findOneAndDelete(id: string) {
+
+    const blogsInstance = this.blogsModel.findOne({id: id});
+    if (!blogsInstance) return false
+    await blogsInstance.deleteOne()
+    return true
   }
+
+  async getBlogsById(blogId: string): Promise<Blogs | null> {
+    const blogger: Blogs | null = await this.blogsModel.findOne({id: blogId}, {_id: 0, __v: 0})
+    return blogger;
+}
 }
